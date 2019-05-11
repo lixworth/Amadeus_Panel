@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="HackingToTheGate">
     <router-view/>
   </div>
 </template>
@@ -12,6 +12,9 @@ export default {
     return {
       //
     }
+  },
+  mounted:function () {
+    //TODO: 请求后端状态
   }
 }
 </script>
