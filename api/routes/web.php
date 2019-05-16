@@ -12,9 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
-
+Route::any('/ping', function () {
+    return response()->json(\App\Http\Controllers\Controller::respondJson(true,'PONG'));
+});
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
