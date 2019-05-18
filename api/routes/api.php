@@ -13,6 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+
+Route::any('/ping', function () {
+    return response()->json(\App\Http\Controllers\Controller::respondJson(true,'PONG'));
+});
+
+Route::group([
+    'prefix' => 'auth',
+], function ($router) {
+
+    Route::any('login', 'AuthController@login');
+    Route::any('checkuser', 'AuthController@checkUser');
+    Route::any('logout', 'AuthController@logout');
+    Route::any('refresh', 'AuthController@refresh');
+    Route::any('me', 'AuthController@me');
+
 });

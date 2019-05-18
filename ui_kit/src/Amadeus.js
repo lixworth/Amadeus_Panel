@@ -9,16 +9,20 @@
 
 import axios from 'axios';
 
-// TODO:做成vue插件
 export class Amadeus {
+
     static config = { // 你是我万水千山的冒险 要找的标记点
-        api:"http://127.0.0.1:8000",
-        dev: false,
+        api:"/api",
+        dev: true,
     };
 
     static info = {
         version: "1.0"
     }
+    static api(action){
+        return this.config.api+ action
+    }
+
     static getinfo(){
         if(this.config.dev){
             console.log(   "\n" +
@@ -47,8 +51,19 @@ export class Amadeus {
         }
 
     }
-    static ping(){
-        console.log(this.config.api);
+
+    static log(log){
+        if(this.config.dev){
+            console.log(log);
+        }
     }
+
+    static error(log){
+        if(this.config.dev){
+            console.error(log + " \nISSUE: https://github.com/steinsmc/Amadeus/issue");
+        }
+    }
+
+
 }
 

@@ -14,16 +14,3 @@
 Route::get('/', function () {
     return view('index');
 });
-Route::any('/ping', function () {
-    return response()->json(\App\Http\Controllers\Controller::respondJson(true,'PONG'));
-});
-Route::group([
-    'prefix' => 'auth'
-], function ($router) {
-
-    Route::any('login', 'AuthController@login');
-    Route::any('logout', 'AuthController@logout');
-    Route::any('refresh', 'AuthController@refresh');
-    Route::any('me', 'AuthController@me');
-
-});

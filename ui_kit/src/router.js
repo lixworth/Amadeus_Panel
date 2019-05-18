@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from "./views/Login";
 import LaserLayout from "./layouts/LaserLayout";
+import VueCookie from 'vue-cookie';
+import {Amadeus} from "./Amadeus";
+import {isNull} from "vue-i18n";
 Vue.use(Router);
 var router = new Router({
   mode: 'history',
@@ -36,10 +39,18 @@ var router = new Router({
   ]
 });
 
+function auth(){
+
+  var token = VueCookie.get('Amadeus_token');
+  if(token == null || token === "" || typeof(token) == "undefined" || token === false || token === undefined){
+    return false;
+  }else{
+    return true;
+  }
+};
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    var chxsb = true;
-    if (chxsb) {
+    if (auth) {
       next({
         path: '/login',
         query: { redirect: to.fullPath }

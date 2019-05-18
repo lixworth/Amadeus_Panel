@@ -22,7 +22,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','checkUser']]);
     }
 
     /**
@@ -42,6 +42,16 @@ class AuthController extends Controller
             return response()->json(self::respondJson(false,'「何度だって 立ち上がって」',null,'500'),500);
         }
     }
+
+    public function checkUser(){
+        $email = request(['email']);
+        if(User::where('email',$email)->first()){
+            return response()->json(self::respondJson(true,'',null));
+        }else{
+            return response()->json(self::respondJson(false,'',null));
+        }
+
+    }
     /**
      * Get a JWT via given credentials.
      *
@@ -50,9 +60,10 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
+//        $credentials = request(['name', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(self::respondJson(false,'Unauthorized',null,401), 401);
+            return response()->json(self::respondJson(false,'Unauthorized',null,401), 200);
         }
 
         return response()->json(self::respondJson(true,'Only my RAILGUN can shoot it 今すぐ',$this->respondWithToken($token)));
@@ -100,7 +111,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return [
-            'access_token' => $token,
+            'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ];

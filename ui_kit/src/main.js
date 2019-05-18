@@ -6,11 +6,14 @@ import store from './store'
 import './registerServiceWorker'
 import i18n from './i18n'
 import {Amadeus} from "./Amadeus";
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 // Require dependencies
-var VueCookie = require('vue-cookie');
-// Tell Vue to use the plugin
-Vue.use(VueCookie);
+Vue.use(require('vue-cookies'))
 
+// Tell Vue to use the plugin
+
+Vue.use(VueAxios,axios);
 Vue.config.productionTip = false
 
 Amadeus.getinfo();
