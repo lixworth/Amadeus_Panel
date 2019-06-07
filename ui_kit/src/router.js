@@ -40,7 +40,6 @@ var router = new Router({
 });
 
 function auth(){
-
   var token = VueCookie.get('Amadeus_token');
   if(token == null || token === "" || typeof(token) == "undefined" || token === false || token === undefined){
     return false;
@@ -51,12 +50,12 @@ function auth(){
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (auth) {
+      next()
+    } else {
       next({
         path: '/login',
         query: { redirect: to.fullPath }
       })
-    } else {
-      next()
     }
   } else {
     next() // 确保一定要调用 next()

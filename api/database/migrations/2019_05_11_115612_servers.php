@@ -15,12 +15,12 @@ class Servers extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->bigIncrements('id')->index(); //Instance ID
-            $table->string('daemon'); //Daemon Name
+            $table->bigInteger('daemon_id'); //Daemon ID
             $table->bigInteger('sid'); //Server ID of Daemon
             $table->string('name');
             $table->string('ip');
-            $table->string('port');
-            $table->string('players');
+            $table->integer('port');
+            $table->integer('players');
             $table->string('core');
             $table->bigInteger('owner'); //Owner id
             $table->dateTime('due');
