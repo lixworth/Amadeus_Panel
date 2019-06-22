@@ -1,4 +1,5 @@
 <template>
+<!--    TODO: rewrite -->
     <v-app id="inspire">
         <v-navigation-drawer
                 v-model="drawerRight"

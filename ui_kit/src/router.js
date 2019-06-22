@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import Login from "./views/Login";
 import LaserLayout from "./layouts/LaserLayout";
 import VueCookie from 'vue-cookie';
 import {Amadeus} from "./Amadeus";
@@ -14,7 +12,7 @@ var router = new Router({
     {
       path: '/',
       component: LaserLayout,
-      meta: { requiresAuth: true },
+      // meta: { requiresAuth: true },
       children: [
         {
           path: 'home',
@@ -31,6 +29,10 @@ var router = new Router({
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
+    },{
+      path: '/install',
+      name: 'install',
+      component: () => import(/* webpackChunkName: "about" */ './views/Install.vue')
     },{
       path: '*',
       name: 'NotFound',
@@ -49,7 +51,7 @@ function auth(){
 };
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (auth) {
+    if (auth()) {
       next()
     } else {
       next({
